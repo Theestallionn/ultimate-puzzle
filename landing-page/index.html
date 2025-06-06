@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sliding Puzzle Collection</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to bottom right, #5c412b, #7a5637);
+        margin: 0;
+        padding: 40px;
+        color: #fff;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .logo {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 100px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .bottom-left-gif,
+      .bottom-right-gif {
+        position: fixed;
+        bottom: 20px;
+        width: 140px;
+        height: auto;
+        z-index: 10;
+      }
+
+      .bottom-left-gif {
+        left: 20px;
+      }
+
+      .bottom-right-gif {
+        right: 20px;
+      }
+
+      h1 {
+        margin-top: 100px;
+        font-size: 50px;
+        text-align: center;
+      }
+
+      p {
+        font-size: 16px;
+        text-align: center;
+        color: #ddd;
+        max-width: 600px;
+        margin: 0 auto 40px;
+      }
+
+      .links {
+        text-align: center;
+      }
+
+      a {
+        display: block;
+        margin: 20px auto;
+        font-size: 18px;
+        text-decoration: none;
+        color: #333;
+        border: 2px solid #333;
+        padding: 10px;
+        border-radius: 8px;
+        width: 240px;
+        transition: background 0.3s, color 0.3s;
+        background: #fff;
+      }
+
+      a:hover {
+        background: #333;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top-left logo -->
+    <img
+      src="./assets/seismic-logo-removebg-preview.png"
+      alt="Seismic Logo"
+      class="logo"
+    />
+
+    <!-- Heading and description -->
+    <h1>🧩 Seismic Puzzles</h1>
+    <p>See how fast you can solve each level of the puzzle</p>
+
+    <!-- Links -->
+    <div class="links">
+      <a href="https://seismic-puzzle1.vercel.app/">🧩 Easy</a>
+      <a href="https://seismic-puzzle2.vercel.app/">🌀 Medium</a>
+      <a href="https://seismic-puzzle3.vercel.app/">🕹️ Hard</a>
+    </div>
+
+    <!-- Bottom GIFs -->
+    <img src="./assets/rockyyy.gif" alt="Bottom Left GIF" class="bottom-left-gif" />
+    <img src="./assets/rockky.gif" alt="Bottom Right GIF" class="bottom-right-gif" />
+  </body>
+</html>
