@@ -3,6 +3,26 @@ import puzzleImage from "./assets/puzzle-image.png";
 import winGif from "./assets/rockyyyyyyyy.gif";
 import confetti from "canvas-confetti";
 
+// ✅ Helper to ensure only solvable puzzle configurations
+function isSolvable(tiles) {
+  const gridSize = Math.sqrt(tiles.length);
+  const flattened = tiles.filter((n) => n !== null);
+  let inversions = 0;
+
+  for (let i = 0; i < flattened.length; i++) {
+    for (let j = i + 1; j < flattened.length; j++) {
+      if (flattened[i] > flattened[j]) inversions++;
+    }
+  }
+
+  if (gridSize % 2 !== 0) {
+    return inversions % 2 === 0;
+  } else {
+    const blankRow = Math.floor(tiles.indexOf(null) / gridSize);
+    return (blankRow % 2 === 0) !== (inversions % 2 === 0);
+  }
+}
+
 function App() {
   const gridSize = 3;
   const tileSize = 100;
@@ -27,16 +47,21 @@ function App() {
   }, [isWon]);
 
   const resetGame = () => {
-    const original = [...Array(tileCount - 1).keys()];
-    const shuffled = [...original];
+    let tiles;
+    do {
+      const original = [...Array(tileCount - 1).keys()];
+      const shuffled = [...original];
 
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
 
-    shuffled.push(null);
-    setTiles(shuffled);
+      shuffled.push(null);
+      tiles = shuffled;
+    } while (!isSolvable(tiles));
+
+    setTiles(tiles);
     setTime(0);
     setIsWon(false);
   };

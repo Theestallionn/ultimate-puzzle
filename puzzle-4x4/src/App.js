@@ -34,24 +34,30 @@ function App() {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
-    } while (!isSolvable([...shuffled, null]));
+      shuffled.push(null);
+    } while (!isSolvable(shuffled));
 
-    shuffled.push(null);
     setTiles(shuffled);
     setTime(0);
     setIsSolved(false);
   };
 
   const isSolvable = (tiles) => {
-    const invCount = tiles.reduce((inv, val, i) => {
-      if (val === null) return inv;
-      for (let j = i + 1; j < tiles.length; j++) {
-        if (tiles[j] !== null && tiles[i] > tiles[j]) inv++;
+    let invCount = 0;
+    const flattened = tiles.filter((n) => n !== null);
+
+    for (let i = 0; i < flattened.length - 1; i++) {
+      for (let j = i + 1; j < flattened.length; j++) {
+        if (flattened[i] > flattened[j]) invCount++;
       }
-      return inv;
-    }, 0);
-    const emptyRow = Math.floor(tiles.indexOf(null) / gridSize);
-    return (invCount + emptyRow) % 2 === 0;
+    }
+
+    const emptyRowFromBottom = gridSize - Math.floor(tiles.indexOf(null) / gridSize);
+    if (gridSize % 2 === 0) {
+      return (emptyRowFromBottom % 2 === 0) !== (invCount % 2 === 0);
+    } else {
+      return invCount % 2 === 0;
+    }
   };
 
   const moveTile = (index) => {
@@ -92,7 +98,7 @@ function App() {
       particleCount: 200,
       spread: 100,
       origin: { y: 0.6 },
-      colors: ["#7b3f00", "#a0522d", "#deb887"]
+      colors: ["#7b3f00", "#a0522d", "#deb887"],
     });
   };
 
@@ -124,7 +130,7 @@ function App() {
         {tiles.map((tile, index) => (
           <button
             key={index}
-            onClick={() => !isSolved && moveTile(index)}
+            onClick={() => moveTile(index)}
             style={{
               ...styles.tile,
               backgroundImage: tile !== null ? `url(${puzzleImage})` : "none",

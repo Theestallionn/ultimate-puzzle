@@ -43,6 +43,7 @@ function App() {
     setIsSolved(false);
   };
 
+  // ✅ Updated solvability check for 4x4 grids
   const isSolvable = (tiles) => {
     const invCount = tiles.reduce((inv, val, i) => {
       if (val === null) return inv;
@@ -51,8 +52,17 @@ function App() {
       }
       return inv;
     }, 0);
-    const emptyRow = Math.floor(tiles.indexOf(null) / gridSize);
-    return (invCount + emptyRow) % 2 === 0;
+
+    const emptyIndex = tiles.indexOf(null);
+    const emptyRowFromBottom = gridSize - Math.floor(emptyIndex / gridSize);
+
+    if (gridSize % 2 === 0) {
+      return (emptyRowFromBottom % 2 === 0)
+        ? (invCount % 2 === 1)
+        : (invCount % 2 === 0);
+    } else {
+      return invCount % 2 === 0;
+    }
   };
 
   const moveTile = (index) => {
